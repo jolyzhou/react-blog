@@ -1,0 +1,23 @@
+{
+  "name": "react-blog",
+  "version": "1.0.0",
+  "description": "reactjs blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jolyzhou/react-blog.git"
+  },
+  "keywords": [
+    "react",
+    "javascript"
+  ],
+  "author": "jolyzhou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jolyzhou/react-blog/issues"
+  },
+  "homepage": "https://github.com/jolyzhou/react-blog#readme"
+}
