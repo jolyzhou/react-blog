@@ -19,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/jolyzhou/react-blog/issues"
   },
-  "homepage": "https://github.com/jolyzhou/react-blog#readme"
+  "homepage": "https://github.com/jolyzhou/react-blog#readme",
+  "devDependencies": {
+    "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
+  }
 }
