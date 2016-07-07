@@ -1,6 +1,21 @@
 import React from 'react';
+import $ from 'jquery';
 
 export default class Pinnedpost extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            des: ""
+        };
+    }
+    componentDidMount(){
+        $.get('http://newwebshop.local/test/test', function(result) {
+            let res = JSON.parse(result);
+            this.setState({
+                des: res.one
+            });
+        }.bind(this));
+    }
     render() {
         return (
             <div className="posts">
@@ -16,11 +31,17 @@ export default class Pinnedpost extends React.Component {
                             </p>
                     </header>
                     <div className="post-description">
-                        <p>Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the slides from the presentation. Although it looks pretty minimalist, we’ve been working on Pure for several months. After many iterations, we have released Pure as a set of small, responsive, CSS modules that you can use in every web project.
+                        <p>
+                        {this.state.des}
                         </p>
                     </div>
                 </section>
             </div>
         );
+    }
+
+    renderDes() {
+        return <p>zjy Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the slides from the presentation. Although it looks pretty minimalist, we’ve been working on Pure for several months. After many iterations, we have released Pure as a set of small, responsive, CSS modules that you can use in every web project.
+        </p>
     }
 }
