@@ -11,7 +11,7 @@ module.exports = {
     output: {
         path: __dirname,//hot react must be absolute
         filename: 'bundle.js',
-        publicPath: '/static/'
+        publicPath: '/'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
