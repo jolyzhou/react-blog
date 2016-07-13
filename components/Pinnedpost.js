@@ -8,10 +8,10 @@ export default class Pinnedpost extends React.Component {
         };
     }
     componentDidMount(){
-        $.get('http://newwebshop.local/test/test', function(result) {
-            let res = JSON.parse(result);
+        $.get('http://localhost:8080/api/list', function(result) {
+            // let res = JSON.parse(result);
             this.setState({
-                des: res.one
+                des: result.one
             });
         }.bind(this));
     }
