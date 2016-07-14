@@ -26,7 +26,7 @@ var createApiRouter = function () {
         res.send('getinfo');
     });
     return router;
-}
+};
 
 var pagesRouter = createPageRouter();
 var apiRouter = createApiRouter();
