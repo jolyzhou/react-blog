@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 
 exports.createPageRouter = function() {
     var router = express.Router();

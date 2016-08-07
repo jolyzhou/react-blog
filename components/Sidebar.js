@@ -1,6 +1,7 @@
 import React from 'react';
+import {Link} from 'react-router';
 
-export default class    Sidebar extends React.Component {
+export default class Sidebar extends React.Component {
     render(){
         return (
             <div className="sidebar pure-u-1 pure-u-md-1-4">
@@ -11,10 +12,13 @@ export default class    Sidebar extends React.Component {
                     <nav className="nav">
                         <ul className="nav-list">
                             <li className="nav-item">
-                                <a className="pure-button" href="#">About</a>
+                                <Link className="pure-button" to="/main">Main</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="pure-button" href="#">Contact</a>
+                                <Link className="pure-button" to="/about">About</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="pure-button" to="/contact">Contact</Link>
                             </li>
                         </ul>
                     </nav>

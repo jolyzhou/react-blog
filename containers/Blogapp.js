@@ -7,7 +7,7 @@ export default class Blogapp extends React.Component {
         return (
             <div id="layout" className="pure-g">
                 <Sidebar />
-                <Contents />
+                {this.props.children}
             </div>
         );
     }
