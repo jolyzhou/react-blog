@@ -20,6 +20,9 @@ export default class Sidebar extends React.Component {
                             <li className="nav-item">
                                 <Link className="pure-button" to="/contact">Contact</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="pure-button" to="/login">Login</Link>
+                            </li>
                         </ul>
                     </nav>
                 </div>
