@@ -22,9 +22,9 @@ export default class Pinnedpost extends React.Component {
                 <section className="post">
                     <header className="post-header">
                         <img className="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="img/common/tilo-avatar.png" />
-                            <h2 className="post-title">Introducing Pure</h2>
+                            <h2 className="post-title">Introducing React</h2>
                             <p className="post-meta"> By
-                                <a href="#" className="post-author">Tilo Mitra</a> under
+                                <a href="#" className="post-author">Jolyzhou</a> under
                                 <a className="post-category post-category-design" href="#">CSS</a>
                                 <a className="post-category post-category-pure" href="#">Pure</a>
                             </p>

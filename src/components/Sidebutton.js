@@ -14,14 +14,25 @@ export class About extends React.Component {
 };
 
 export class Login extends React.Component {
+    constructor (props) {
+        super(props);
+    }
+    handleSubmit (evt) {
+        evt.preventDefault();
+        console.log("=================");
+        console.log(this);
+        console.log("=================");
+        const history = this.props.history;
+        let nextPath = '/posts';
+        history.pushState({}, nextPath);
+    }
     render() {
         return (
             <div className="content pure-u-1 pure-u-md-3-4">
                 <div>
                     <div className="posts">
-                        <h3>Login</h3>
-                        <div className="app-center">
-                        <form className="pure-form pure-form-stacked">
+                        <h3>Login Panel</h3>
+                        <form className="pure-form pure-form-stacked" onSubmit={::this.handleSubmit}>
                             <fieldset>
                                 <legend>Please Login</legend>
                                 <label >Email</label>
@@ -31,7 +42,6 @@ export class Login extends React.Component {
                                 <button type="submit" className="pure-button pure-button-primary">Sign in</button>
                             </fieldset>
                         </form>
-                        </div>
                     </div>
                 </div>
             </div>

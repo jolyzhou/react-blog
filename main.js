@@ -3,11 +3,23 @@ var path =require('path');
 var compression =require('compression');
 var apiroute = require('./routers/apiroute');
 var pageroute = require('./routers/pageroute');
+var webpack = require('webpack');
+var WebpackDevMid = require('webpack-dev-middleware');
+var WebpackHotMid = require('webpack-hot-middleware');
+var config = require('./webpack.main.config');
+
+var compiler = webpack(config);
 
 var app = express();
 
 app.use(compression());
 
+app.use(WebpackDevMid(compiler,{
+    noInfo: true,
+    publicPath: config.output.publicPath
+}));
+
+app.use(WebpackHotMid(compiler));
 
 app.use(express.static(path.join(__dirname, 'resource')));
 
