@@ -1,8 +1,11 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
-import Contents from '../components/Contents';
+
 
 export default class Blogapp extends React.Component {
+    constructor (props) {
+        super(props);
+    }
     render(){
         return (
             <div id="layout" className="pure-g">

@@ -5,17 +5,12 @@ import Contents from './components/Contents';
 import {About, Login, Contact } from './components/Sidebutton';
 import Posts from './components/Posts';
 import {Router, Route, browserHistory, IndexRoute, hashHistory} from 'react-router';
+import { Provider } from 'react-redux';
+import Root,{store} from './root';
 
 let rootElement = document.getElementById('root');
 render((
-    <Router history={hashHistory}>
-        <Route path="/" component={Blogapp}>
-            <IndexRoute component={Contents} />
-            <Route path="/main" component={Contents} />
-            <Route path="/about" component={About} />
-            <Route path="/contact" component={Contact} />
-            <Route path="/login" component={Login} />
-            <Route path="/posts" component={Posts} />
-        </Route>
-    </Router>
+    <Provider store={store}>
+        <Root />
+    </Provider>
 ), rootElement);

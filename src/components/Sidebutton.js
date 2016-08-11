@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{PropTypes} from 'react';
+import * as appactions from '../actions/appactions';
 export class About extends React.Component {
     render() {
         return (
@@ -14,17 +15,30 @@ export class About extends React.Component {
 };
 
 export class Login extends React.Component {
+    static propTypes = {
+
+    };
+    static contextTypes = {
+        store: PropTypes.any,
+        history: PropTypes.object.isRequired,
+        router:PropTypes.object.isRequired
+    };
     constructor (props) {
         super(props);
     }
     handleSubmit (evt) {
         evt.preventDefault();
-        console.log("=================");
-        console.log(this);
-        console.log("=================");
-        const history = this.props.history;
-        let nextPath = '/posts';
-        history.pushState({}, nextPath);
+        const { history, store, router } = this.context;
+        console.log(store.getState());
+        store.dispatch(appactions.login(true));
+        const login_state = store.getState().reducers.login.lg_status;
+        if(login_state === true){
+            let nextPath = '/posts';
+            router.push(nextPath);
+        } else {
+            console.log("login failed.");
+        }
+
     }
     render() {
         return (
