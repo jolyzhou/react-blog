@@ -14,6 +14,23 @@ import configureStore from './store/configureStore';
 export const store = configureStore();
 
 const history = syncHistoryWithStore(browserHistory, store);
+/**
+ * 定义BLOG要用的所有组件
+ * @type {{path: string, component: Blogapp, indexRoute: {component: Contents}, childRoutes: *[]}}
+ */
+const routes = {
+    path: '/',
+    component: Blogapp,
+    indexRoute: { component: Contents },
+    childRoutes: [
+        { path: 'main', component: Contents },
+        { path: 'about', component: About },
+        { path: 'contact', component: Contact },
+        { path: 'login', component: Login },
+        { path: 'posts', component: Posts }
+
+    ]
+};
 
 class Root extends React.Component {
     constructor (props) {
@@ -21,16 +38,7 @@ class Root extends React.Component {
     }
     render () {
         return (
-            <Router history={history}>
-                <Route path="/" component={Blogapp}>
-                    <IndexRoute component={Contents} />
-                    <Route path="/main" component={Contents} />
-                    <Route path="/about" component={About} />
-                    <Route path="/contact" component={Contact} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/posts" component={Posts} />
-                </Route>
-            </Router>
+            <Router history={history} routes={routes} />
         )
     }
 }
