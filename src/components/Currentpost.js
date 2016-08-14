@@ -1,78 +1,102 @@
 import React from 'react';
 
 export default class Currentpost extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            data: "",
+            offset: 0,
+            limit: 2,
+            page: 1,
+            page_num: 1
+        };
+    }
+
+    componentDidMount(){
+        $.post( "api/alllist", { offset: this.state.offset, limit: this.state.limit })
+            .done(function( result ) {
+                this.setState({
+                    data: result.data
+                });
+            }.bind(this));
+        $.get('api/allcount', function(result) {
+            let page_num = Math.ceil((result.num)/(this.state.limit));
+            this.setState({
+                page: page_num
+            });
+        }.bind(this));
+    }
+    currentPanel(title, subtitle, key){
+        return (
+            <section className="post" key={key}>
+                <header className="post-header">
+                    <img className="post-avatar" alt="Andrew Wooldridge&#x27;s avatar" height="48" width="48" src="img/common/myphoto.png" />
+                    <h2 className="post-title">{title}</h2>
+                    <p className="post-meta">By
+                        <a className="post-author" href="#">Andrew Wooldridge</a> under
+                        <a className="post-category post-category-yui" href="#">YUI</a>
+                    </p>
+                </header>
+                <div className="post-description">
+                    <p>{subtitle}
+                    </p>
+                </div>
+            </section>
+        )
+    }
+    pageprevHandle(){
+        if(this.state.page_num <= this.state.page && this.state.page_num > 1){
+            this.setState({
+                page_num: this.state.page_num-1,
+                offset: this.state.offset - this.state.limit
+            });
+            $.post( "api/alllist", { offset: this.state.offset - this.state.limit, limit: this.state.limit })
+                .done(function( result ) {
+                    this.setState({
+                        data: result.data
+                    });
+                }.bind(this));
+        }
+
+
+    }
+    pagenextHandle(){
+        if(this.state.page_num < this.state.page){
+            this.setState({
+                page_num: this.state.page_num+1,
+                offset: this.state.offset + this.state.limit
+            });
+            $.post( "api/alllist", { offset: this.state.offset + this.state.limit, limit: this.state.limit })
+                .done(function( result ) {
+                    this.setState({
+                        data: result.data
+                    });
+                }.bind(this));
+        }
+
+    }
     render() {
+        let contents = [];
+        for(let i = 0; i < this.state.data.length; i++) {
+            contents.push(this.currentPanel(this.state.data[i].title,this.state.data[i].subtitle,i)) ;
+        }
+        let p_button_disable = null, n_button_disable = null ;
+        if(this.state.page_num === 1){
+            p_button_disable = 'pure-button pure-input-1 pure-button-primary pure-button-disabled';
+        } else {
+            p_button_disable = 'pure-button pure-input-1 pure-button-primary';
+        }
+        if(this.state.page_num === this.state.page){
+            n_button_disable = 'pure-button pure-input-1 pure-button-primary pure-button-disabled';
+        } else {
+            n_button_disable = 'pure-button pure-input-1 pure-button-primary';
+        }
         return (
             <div className="posts">
                 <h1 className="content-subhead">Recent Posts</h1>
-                <section className="post">
-                    <header className="post-header">
-                        <img className="post-avatar" alt="Eric Ferraiuolo&#x27;s avatar" height="48" width="48" src="img/common/ericf-avatar.png" />
-                        <h2 className="post-title">Everything You Need to Know About Grunt</h2>
-                        <p className="post-meta">By
-                            <a className="post-author" href="#">Eric Ferraiuolo</a> under
-                            <a className="post-category post-category-js" href="#">JavaScript</a>
-                        </p>
-                    </header>
-                    <div className="post-description">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        </p>
-                    </div>
-                </section>
-
-                <section className="post">
-                    <header className="post-header">
-                        <img className="post-avatar" alt="Reid Burke&#x27;s avatar" height="48" width="48" src="img/common/reid-avatar.png" />
-                        <h2 className="post-title">Photos from CSSConf and JSConf</h2>
-                        <p className="post-meta">By
-                            <a className="post-author" href="#">Reid Burke</a> under
-                            <a className="post-category" href="#">Uncategorized</a>
-                        </p>
-                    </header>
-
-                    <div className="post-description">
-                        <div className="post-images pure-g">
-                            <div className="pure-u-1 pure-u-md-1-2">
-                                <a href="http://www.flickr.com/photos/uberlife/8915936174/">
-                                    <img alt="Photo of someone working poolside at a resort"
-                                         className="pure-img-responsive"
-                                         src="http://farm8.staticflickr.com/7448/8915936174_8d54ec76c6.jpg" />
-                                </a>
-
-                                <div className="post-image-meta">
-                                    <h3>CSSConf Photos</h3>
-                                </div>
-                            </div>
-
-                            <div className="pure-u-1 pure-u-md-1-2">
-                                <a href="http://www.flickr.com/photos/uberlife/8907351301/">
-                                    <img alt="Photo of the sunset on the beach"
-                                         className="pure-img-responsive"
-                                         src="http://farm8.staticflickr.com/7382/8907351301_bd7460cffb.jpg" />
-                                </a>
-
-                                <div className="post-image-meta">
-                                    <h3>JSConf Photos</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="post">
-                    <header className="post-header">
-                        <img className="post-avatar" alt="Andrew Wooldridge&#x27;s avatar" height="48" width="48" src="img/common/andrew-avatar.png" />
-                        <h2 className="post-title">YUI 3.10.2 Released</h2>
-                        <p className="post-meta">By
-                            <a className="post-author" href="#">Andrew Wooldridge</a> under
-                            <a className="post-category post-category-yui" href="#">YUI</a>
-                        </p>
-                    </header>
-                    <div className="post-description">
-                        <p>We are happy to announce the release of YUI 3.10.2! You can find it now on the Yahoo! CDN, download it directly, or pull it in via npm. We’ve also updated the YUI Library website with the latest documentation.
-                        </p>
-                    </div>
-                </section>
+                {contents}
+                <button  className={p_button_disable} onClick={::this.pageprevHandle}>&laquo; Prev</button>
+                <button  className={n_button_disable} onClick={::this.pagenextHandle}>Next &raquo;</button>
             </div>
         );
     }

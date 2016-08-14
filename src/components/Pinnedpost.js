@@ -4,14 +4,16 @@ export default class Pinnedpost extends React.Component {
     constructor() {
         super();
         this.state = {
-            des: ""
+            tittle: "",
+            subtitle: ""
         };
     }
     componentDidMount(){
         $.get('http://localhost:8080/api/list', function(result) {
             // let res = JSON.parse(result);
             this.setState({
-                des: result.one
+                title: result.title,
+                subtitle: result.subtitle
             });
         }.bind(this));
     }
@@ -21,17 +23,16 @@ export default class Pinnedpost extends React.Component {
                 <h1 className="content-subhead">Pinned Post</h1>
                 <section className="post">
                     <header className="post-header">
-                        <img className="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="img/common/tilo-avatar.png" />
-                            <h2 className="post-title">Introducing React</h2>
+                        <img className="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="img/common/myphoto.png" />
+                            <h2 className="post-title">{this.state.title}</h2>
                             <p className="post-meta"> By
                                 <a href="#" className="post-author">Jolyzhou</a> under
-                                <a className="post-category post-category-design" href="#">CSS</a>
-                                <a className="post-category post-category-pure" href="#">Pure</a>
+                                <a className="post-category post-category-design" href="#">JavaScript</a>
                             </p>
                     </header>
                     <div className="post-description">
                         <p>
-                        {this.state.des}
+                        {this.state.subtitle}
                         </p>
                     </div>
                 </section>
