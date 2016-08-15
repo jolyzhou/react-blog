@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const $ = require('jquery');
 
 const pool = mysql.createPool({
     host: 'localhost',

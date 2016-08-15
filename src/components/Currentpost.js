@@ -1,29 +1,25 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import * as appactions from '../actions/appactions';
 
 export default class Currentpost extends React.Component {
+    static contextTypes = {
+        store: PropTypes.any
+    };
     constructor() {
         super();
-        this.state = {
-            data: "",
-            offset: 0,
-            limit: 2,
-            page: 1,
-            page_num: 1
-        };
     }
 
     componentDidMount(){
-        $.post( "api/alllist", { offset: this.state.offset, limit: this.state.limit })
+        const { store } = this.context;
+        const state_offset = store.getState().reducers.posts.offset;
+        const state_limit = store.getState().reducers.posts.limit;
+        $.post( "api/alllist", { offset: state_offset, limit: state_limit })
             .done(function( result ) {
-                this.setState({
-                    data: result.data
-                });
+                store.dispatch(appactions.posts_alllist(result.data));
             }.bind(this));
         $.get('api/allcount', function(result) {
-            let page_num = Math.ceil((result.num)/(this.state.limit));
-            this.setState({
-                page: page_num
-            });
+            let page_num = Math.ceil((result.num)/(state_limit));
+            store.dispatch(appactions.posts_allcount(page_num));
         }.bind(this));
     }
     currentPanel(title, subtitle, key){
@@ -33,7 +29,7 @@ export default class Currentpost extends React.Component {
                     <img className="post-avatar" alt="Andrew Wooldridge&#x27;s avatar" height="48" width="48" src="img/common/myphoto.png" />
                     <h2 className="post-title">{title}</h2>
                     <p className="post-meta">By
-                        <a className="post-author" href="#">Andrew Wooldridge</a> under
+                        <a className="post-author" href="#">jolyzhou</a> under
                         <a className="post-category post-category-yui" href="#">YUI</a>
                     </p>
                 </header>
@@ -45,48 +41,52 @@ export default class Currentpost extends React.Component {
         )
     }
     pageprevHandle(){
-        if(this.state.page_num <= this.state.page && this.state.page_num > 1){
-            this.setState({
-                page_num: this.state.page_num-1,
-                offset: this.state.offset - this.state.limit
-            });
-            $.post( "api/alllist", { offset: this.state.offset - this.state.limit, limit: this.state.limit })
+        const { store } = this.context;
+        const state_offset = store.getState().reducers.posts.offset;
+        const state_limit = store.getState().reducers.posts.limit;
+        const state_page = store.getState().reducers.posts.page;
+        const state_page_num = store.getState().reducers.posts.page_num;
+        if(state_page_num <= state_page && state_page_num > 1){
+            store.dispatch(appactions.page_prev((state_page_num - 1),(state_offset - state_limit)));
+            $.post( "api/alllist", { offset: state_offset - state_limit, limit: state_limit })
                 .done(function( result ) {
-                    this.setState({
-                        data: result.data
-                    });
+                    store.dispatch(appactions.posts_alllist(result.data));
                 }.bind(this));
         }
 
 
     }
     pagenextHandle(){
-        if(this.state.page_num < this.state.page){
-            this.setState({
-                page_num: this.state.page_num+1,
-                offset: this.state.offset + this.state.limit
-            });
-            $.post( "api/alllist", { offset: this.state.offset + this.state.limit, limit: this.state.limit })
+        const { store } = this.context;
+        const state_offset = store.getState().reducers.posts.offset;
+        const state_limit = store.getState().reducers.posts.limit;
+        const state_page = store.getState().reducers.posts.page;
+        const state_page_num = store.getState().reducers.posts.page_num;
+        if(state_page_num < state_page){
+            store.dispatch(appactions.page_next((state_page_num + 1),(state_offset + state_limit)));
+            $.post( "api/alllist", { offset: state_offset + state_limit, limit: state_limit })
                 .done(function( result ) {
-                    this.setState({
-                        data: result.data
-                    });
+                    store.dispatch(appactions.posts_alllist(result.data));
                 }.bind(this));
         }
 
     }
     render() {
+        const { store } = this.context;
+        const state_data = store.getState().reducers.posts.data;
+        const state_page = store.getState().reducers.posts.page;
+        const state_page_num = store.getState().reducers.posts.page_num;
         let contents = [];
-        for(let i = 0; i < this.state.data.length; i++) {
-            contents.push(this.currentPanel(this.state.data[i].title,this.state.data[i].subtitle,i)) ;
+        for(let i = 0; i < state_data.length; i++) {
+            contents.push(this.currentPanel(state_data[i].title,state_data[i].subtitle,i)) ;
         }
         let p_button_disable = null, n_button_disable = null ;
-        if(this.state.page_num === 1){
+        if(state_page_num === 1){
             p_button_disable = 'pure-button pure-input-1 pure-button-primary pure-button-disabled';
         } else {
             p_button_disable = 'pure-button pure-input-1 pure-button-primary';
         }
-        if(this.state.page_num === this.state.page){
+        if(state_page_num === state_page){
             n_button_disable = 'pure-button pure-input-1 pure-button-primary pure-button-disabled';
         } else {
             n_button_disable = 'pure-button pure-input-1 pure-button-primary';
