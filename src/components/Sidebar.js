@@ -24,7 +24,7 @@ export default class Sidebar extends React.Component {
     render(){
         let loginState = this.props.loginState;
         let logPanel,postPanel;
-        if(loginState === null){
+        if(loginState === false){
             logPanel = <Link className="pure-button" to="/login">Login</Link>;
         } else {
             logPanel = <Link className="pure-button" to="/" onClick={this.logout}>Logout</Link>;

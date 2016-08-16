@@ -96,6 +96,7 @@ export default class Currentpost extends React.Component {
                 <h1 className="content-subhead">Recent Posts</h1>
                 {contents}
                 <button  className={p_button_disable} onClick={::this.pageprevHandle}>&laquo; Prev</button>
+                <button className="pure-button"> {state_page_num} / {state_page}</button>
                 <button  className={n_button_disable} onClick={::this.pagenextHandle}>Next &raquo;</button>
             </div>
         );

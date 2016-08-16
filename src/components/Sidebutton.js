@@ -22,21 +22,19 @@ export class Login extends React.Component {
      * @type {{store: __React.Requireable<any>, changeLoginState: __React.Requireable<any>}}
      */
     static contextTypes = {
-        store: PropTypes.any,
-        changeLoginState:PropTypes.any
+        store: PropTypes.any
     };
     constructor (props) {
         super(props);
     }
     handleSubmit (evt) {
         evt.preventDefault();
-        const { store,changeLoginState} = this.context;
+        const { store} = this.context;
         console.log(store.getState());
         store.dispatch(appactions.login(true));//发送登录action
         const login_state = store.getState().reducers.login.lg_status;
         if(login_state === true){
             let nextPath = '/posts';
-            changeLoginState(true);
             browserHistory.push(nextPath);
         } else {
             console.log("login failed.");
