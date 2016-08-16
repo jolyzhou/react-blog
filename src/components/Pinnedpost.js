@@ -1,47 +1,52 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import * as appactions from '../actions/appactions';
 
 export default class Pinnedpost extends React.Component {
+    static contextTypes = {
+        store: PropTypes.any
+    };
     constructor() {
         super();
-        this.state = {
-            tittle: "",
-            subtitle: ""
-        };
     }
     componentDidMount(){
-        $.get('http://localhost:8080/api/list', function(result) {
-            // let res = JSON.parse(result);
-            this.setState({
-                title: result.title,
-                subtitle: result.subtitle
-            });
+        const { store } = this.context;
+        $.get('api/list', function(result) {
+            store.dispatch(appactions.posts_pinned(result.pin));
         }.bind(this));
     }
     render() {
+        const { store } = this.context;
+        const state_pin = store.getState().reducers.posts.pin;
+        let state_title = "";
+        let state_tag = "";
+        let state_subtitle = "";
+        if(state_pin[0] === undefined){
+
+        } else {
+            state_title = state_pin[0].title;
+            state_tag = state_pin[0].tag;
+            state_subtitle = state_pin[0].subtitle;
+        }
+
         return (
             <div className="posts">
                 <h1 className="content-subhead">Pinned Post</h1>
                 <section className="post">
                     <header className="post-header">
                         <img className="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="img/common/myphoto.png" />
-                            <h2 className="post-title">{this.state.title}</h2>
+                            <h2 className="post-title">{state_title}</h2>
                             <p className="post-meta"> By
                                 <a href="#" className="post-author">Jolyzhou</a> under
-                                <a className="post-category post-category-design" href="#">JavaScript</a>
+                                <a className="post-category post-category-design" href="#">{state_tag}</a>
                             </p>
                     </header>
                     <div className="post-description">
                         <p>
-                        {this.state.subtitle}
+                        {state_subtitle}
                         </p>
                     </div>
                 </section>
             </div>
         );
-    }
-
-    renderDes() {
-        return <p>zjy Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the slides from the presentation. Although it looks pretty minimalist, we’ve been working on Pure for several months. After many iterations, we have released Pure as a set of small, responsive, CSS modules that you can use in every web project.
-        </p>
     }
 }

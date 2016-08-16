@@ -18,6 +18,11 @@ export default class Posts extends React.Component {
                                 <option>JavaScript</option>
                                 <option>Other</option>
                             </select>
+                            <label htmlFor="b_pinned">Pinned</label>
+                            <select id="b_pinned" className="pure-input-1">
+                                <option>YES</option>
+                                <option>NO</option>
+                            </select>
                             <label htmlFor="b_content">Content</label>
                             <textarea id="b_content" className="pure-input-1" placeholder="Textareas work too" rows="15"></textarea>
                             <button type="submit" className="pure-button pure-button-primary">SAVE POST</button>

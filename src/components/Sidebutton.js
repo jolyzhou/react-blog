@@ -27,19 +27,35 @@ export class Login extends React.Component {
     constructor (props) {
         super(props);
     }
+    handleInputChange (evt) {
+        const { store } = this.context;
+        if(evt.target.name === 'email')
+            store.dispatch(appactions.loginput_email(evt.target.value));
+        if(evt.target.name === 'password')
+            store.dispatch(appactions.loginput_password(evt.target.value));
+    }
+
     handleSubmit (evt) {
         evt.preventDefault();
-        const { store} = this.context;
-        console.log(store.getState());
-        store.dispatch(appactions.login(true));//发送登录action
-        const login_state = store.getState().reducers.login.lg_status;
-        if(login_state === true){
-            let nextPath = '/posts';
-            browserHistory.push(nextPath);
-        } else {
-            console.log("login failed.");
-        }
+        const { store } = this.context;
+        const state_email = store.getState().reducers.login.email;
+        const state_password = store.getState().reducers.login.password;
+        $.post( "api/login", { email: state_email, password: state_password })
+            .done(function( result ) {
+                if(result.isexist === 1){
+                    store.dispatch(appactions.login(true));//发送登录action
+                    const login_state = store.getState().reducers.login.lg_status;
+                    if(login_state === true){
+                        let nextPath = '/posts';
+                        browserHistory.push(nextPath);
+                    } else {
+                        alert("check your email or password.");
+                    }
+                }else {
+                    alert("check your email or password.");
+                }
 
+            }.bind(this));
     }
     render() {
         return (
@@ -47,13 +63,13 @@ export class Login extends React.Component {
                 <div>
                     <div className="posts">
                         <h3>Login Panel</h3>
-                        <form className="pure-form pure-form-stacked" onSubmit={::this.handleSubmit}>
+                        <form className="pure-form pure-form-stacked" onSubmit={::this.handleSubmit} onChange={::this.handleInputChange}>
                             <fieldset>
                                 <legend>Please Login</legend>
                                 <label htmlFor="email">Email</label>
-                                <input id="email" className="pure-input-1" type="email" placeholder="Email" />
+                                <input id="email" className="pure-input-1" name="email" type="email" placeholder="Email" />
                                 <label htmlFor="password">Password</label>
-                                <input id="password" className="pure-input-1" type="password" placeholder="Password" />
+                                <input id="password" className="pure-input-1" name="password" type="password" placeholder="Password" />
                                 <button type="submit" className="pure-button pure-input-1 pure-button-primary">Sign in</button>
                             </fieldset>
                         </form>

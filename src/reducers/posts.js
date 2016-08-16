@@ -5,6 +5,7 @@ import * as constants from '../constants';
  */
 const initialState = {
     data: "",
+    pin: "",
     offset: 0,
     limit: 2,
     page: 1,
@@ -21,6 +22,8 @@ export default (state = initialState, action) => {
             return {...state, page_num: action.page_num, offset: action.offset};
         case constants.PAGE_NEXT:
             return {...state, page_num: action.page_num, offset: action.offset};
+        case constants.POST_GET_PINNED:
+            return {...state, pin: action.pin};
         default:
             return state;
 

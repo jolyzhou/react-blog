@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const $ = require('jquery');
+const crypto = require('crypto');
 
 const pool = mysql.createPool({
     host: 'localhost',
@@ -10,7 +10,7 @@ const pool = mysql.createPool({
 
 exports.Pinnedpost_list = function (id, callback) {
     pool.getConnection(function(err, connection) {
-        connection.query("select title, subtitle, content_raw from posts where id = ?", [id], function (err, rows, fields) {
+        connection.query("select title, subtitle, tag, content_raw from posts where is_pinned = ? order by id desc limit 1", [id], function (err, rows, fields) {
             return callback(rows);
         });
         connection.release();
@@ -19,7 +19,7 @@ exports.Pinnedpost_list = function (id, callback) {
 
 exports.post_list = function (offset, limit, callback) {
     pool.getConnection(function(err, connection) {
-        var sql = "select title, subtitle, content_raw from posts limit "+parseInt(offset,10)+", "+parseInt(limit,10);
+        var sql = "select title, subtitle, tag, content_raw from posts order by id desc limit "+parseInt(offset,10)+", "+parseInt(limit,10);
         console.log(sql);
         connection.query(sql,function (err, rows, fields) {
             return callback(rows);
@@ -31,6 +31,18 @@ exports.post_list = function (offset, limit, callback) {
 exports.post_list_count = function (callback) {
     pool.getConnection(function(err, connection) {
         connection.query("select count(*) from posts ", function (err, rows, fields) {
+            return callback(rows);
+        });
+        connection.release();
+    });
+};
+
+exports.login = function (email, password, callback) {
+    pool.getConnection(function(err, connection) {
+        var sha_password = crypto.createHash('sha1').update(password).digest('hex');
+        var sql = "select count(*) from users where email = "+mysql.escape(email)+" and password = "+mysql.escape(sha_password);
+        console.log(sql);
+        connection.query(sql,function (err, rows, fields) {
             return callback(rows);
         });
         connection.release();

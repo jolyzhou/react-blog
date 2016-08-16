@@ -22,7 +22,7 @@ export default class Currentpost extends React.Component {
             store.dispatch(appactions.posts_allcount(page_num));
         }.bind(this));
     }
-    currentPanel(title, subtitle, key){
+    currentPanel(title, subtitle, tag, key){
         return (
             <section className="post" key={key}>
                 <header className="post-header">
@@ -30,7 +30,7 @@ export default class Currentpost extends React.Component {
                     <h2 className="post-title">{title}</h2>
                     <p className="post-meta">By
                         <a className="post-author" href="#">jolyzhou</a> under
-                        <a className="post-category post-category-yui" href="#">YUI</a>
+                        <a className="post-category post-category-yui" href="#">{tag}</a>
                     </p>
                 </header>
                 <div className="post-description">
@@ -78,7 +78,7 @@ export default class Currentpost extends React.Component {
         const state_page_num = store.getState().reducers.posts.page_num;
         let contents = [];
         for(let i = 0; i < state_data.length; i++) {
-            contents.push(this.currentPanel(state_data[i].title,state_data[i].subtitle,i)) ;
+            contents.push(this.currentPanel(state_data[i].title,state_data[i].subtitle,state_data[i].tag,i)) ;
         }
         let p_button_disable = null, n_button_disable = null ;
         if(state_page_num === 1){

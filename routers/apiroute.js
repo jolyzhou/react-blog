@@ -7,10 +7,9 @@ exports.createApiRouter = function () {
     router.use(bodyParser.urlencoded({ extended: false }));
     router.use(bodyParser.json());
     router.get('/list', function (req, res) {
-        apimodel.Pinnedpost_list(26,function (result) {
+        apimodel.Pinnedpost_list('YES',function (result) {
             res.status(200).json({
-                title: result[0].title,
-                subtitle: result[0].subtitle
+                pin: result
             });
         });
 
@@ -21,6 +20,16 @@ exports.createApiRouter = function () {
         apimodel.post_list(offset,limit,function (result) {
             res.status(200).json({
                 data: result
+            });
+        });
+
+    });
+    router.post('/login', function (req, res) {
+        var email = req.body.email;
+        var password = req.body.password;
+        apimodel.login(email,password,function (result) {
+            res.status(200).json({
+                isexist: result[0]['count(*)']
             });
         });
 

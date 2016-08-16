@@ -1,5 +1,21 @@
 import * as constants from '../constants';
 /**
+ * loginput_email
+ * @param email
+ * @returns {{type, email: *}}
+ */
+export function loginput_email(email) {
+    return { type: constants.LOG_INPUT_EMAIL, email};
+}
+/**
+ * loginput_password
+ * @param password
+ * @returns {{type, password: *}}
+ */
+export function loginput_password( password) {
+    return { type: constants.LOG_INPUT_PASSWORD, password};
+}
+/**
  * login action
  * @param lg_status
  * @returns {{type: string, lg_status: *}}
@@ -48,4 +64,12 @@ export function page_prev(page_num, offset) {
  */
 export function page_next(page_num, offset) {
     return { type: constants.PAGE_NEXT, page_num, offset};
+}
+/**
+ * posts_pinned
+ * @param pin
+ * @returns {{type, pin: *}}
+ */
+export function posts_pinned(pin) {
+    return { type: constants.POST_GET_PINNED, pin};
 }
