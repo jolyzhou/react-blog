@@ -1,3 +1,4 @@
+export const HOST = "http://localhost:8080/";
 /**
  * login constants
  * @type {string}
@@ -15,3 +16,4 @@ export const POST_GET_LIST = 'POST_GET_LIST';
 export const PAGE_PREV = 'PAGE_PREV';
 export const PAGE_NEXT = 'PAGE_NEXT';
 export const POST_GET_PINNED = 'POST_GET_PINNED';
+export const POST_DETAIL = 'POST_DETAIL';

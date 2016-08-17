@@ -1,6 +1,7 @@
 import React,{PropTypes} from 'react';
 import {Link} from 'react-router';
 import * as appactions from '../actions/appactions';
+import * as sessionStorage from '../utils/sessionStorage';
 
 export default class Sidebar extends React.Component {
     static contextTypes = {
@@ -13,6 +14,7 @@ export default class Sidebar extends React.Component {
     logout(){
         const {store} = this.context;
         store.dispatch(appactions.logout(null));
+        sessionStorage.remove('isLogin');
     }
     postPanel(){
         return (
@@ -24,10 +26,10 @@ export default class Sidebar extends React.Component {
     render(){
         let loginState = this.props.loginState;
         let logPanel,postPanel;
-        if(loginState === false){
+        if(loginState === null){
             logPanel = <Link className="pure-button" to="/login">Login</Link>;
         } else {
-            logPanel = <Link className="pure-button" to="/" onClick={this.logout}>Logout</Link>;
+            logPanel = <a className="pure-button" onClick={::this.logout}>Logout</a>;
             postPanel = this.postPanel();
         }
         return (

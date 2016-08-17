@@ -73,3 +73,11 @@ export function page_next(page_num, offset) {
 export function posts_pinned(pin) {
     return { type: constants.POST_GET_PINNED, pin};
 }
+/**
+ * posts_detail
+ * @param detail
+ * @returns {{type, detail: *}}
+ */
+export function posts_detail(detail) {
+    return { type: constants.POST_DETAIL, detail};
+}

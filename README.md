@@ -1,6 +1,6 @@
 # react-redux-react-router-blog
 
-#####This is a example showcasing _mostly_ [react](https://github.com/facebook/react) [redux](https://github.com/reactjs/redux) [react-router](https://github.com/reactjs/react-router) [react-redux](https://github.com/reactjs/react-redux) and it provide the basic usage of these libraries.
+##### This is a example showcasing _mostly_ [react](https://github.com/facebook/react) [redux](https://github.com/reactjs/redux) [react-router](https://github.com/reactjs/react-router) [react-redux](https://github.com/reactjs/react-redux) and it provide the basic usage of these libraries.
 
 ## Features
 
@@ -10,6 +10,8 @@
 - `react-redux`
   - React bindings for `Redux`
   - easy-to-connect components
+  - one store
+  - separating presentational and container components
 
 ## Development
 

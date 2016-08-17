@@ -4,7 +4,8 @@ import {bindActionCreators, combineReducers} from 'redux';
 import { syncHistoryWithStore} from 'react-router-redux';
 import Blogapp from './containers/Blogapp';
 import Contents from './components/Contents';
-import {About, Login, Contact } from './components/Sidebutton';
+import {About, Login, Contact, Detail} from './components/Sidebutton';
+import Postlist from './components/Postlist';
 import Posts from './components/Posts';
 import {Router, Route, browserHistory, IndexRoute, hashHistory} from 'react-router';
 import {connect} from 'react-redux';
@@ -13,7 +14,7 @@ import configureStore from './store/configureStore';
 
 export const store = configureStore();
 
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(hashHistory, store);
 /**
  * 定义BLOG要用的所有组件
  * @type {{path: string, component: Blogapp, indexRoute: {component: Contents}, childRoutes: *[]}}
@@ -27,7 +28,9 @@ const routes = {
         { path: 'about', component: About },
         { path: 'contact', component: Contact },
         { path: 'login', component: Login },
-        { path: 'posts', component: Posts }
+        { path: 'posts', component: Posts },
+        { path: 'postlist', component: Postlist },
+        { path: 'detail/:id', component: Detail }
 
     ]
 };

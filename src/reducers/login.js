@@ -1,6 +1,7 @@
 import * as constants from '../constants';
+import * as sessionStorage from '../utils/sessionStorage';
 
-export default (state = { lg_status :false, email: null, password: null }, action) => {
+export default (state = { lg_status :sessionStorage.get('isLogin'), email: null, password: null }, action) => {
     switch (action.type) {
         case constants.LOG_IN:
             return {...state, lg_status:action.lg_status};

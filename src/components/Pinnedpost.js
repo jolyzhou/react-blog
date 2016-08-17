@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {Link} from 'react-router';
 import * as appactions from '../actions/appactions';
 
 export default class Pinnedpost extends React.Component {
@@ -20,12 +21,14 @@ export default class Pinnedpost extends React.Component {
         let state_title = "";
         let state_tag = "";
         let state_subtitle = "";
+        let state_content_id = "";
         if(state_pin[0] === undefined){
 
         } else {
             state_title = state_pin[0].title;
             state_tag = state_pin[0].tag;
             state_subtitle = state_pin[0].subtitle;
+            state_content_id = state_pin[0].id;
         }
 
         return (
@@ -34,7 +37,7 @@ export default class Pinnedpost extends React.Component {
                 <section className="post">
                     <header className="post-header">
                         <img className="post-avatar" alt="Tilo Mitra&#x27;s avatar" height="48" width="48" src="img/common/myphoto.png" />
-                            <h2 className="post-title">{state_title}</h2>
+                            <h2 className="post-title"><Link className="" to={`/detail/${state_tag}`}>{state_title}</Link></h2>
                             <p className="post-meta"> By
                                 <a href="#" className="post-author">Jolyzhou</a> under
                                 <a className="post-category post-category-design" href="#">{state_tag}</a>
